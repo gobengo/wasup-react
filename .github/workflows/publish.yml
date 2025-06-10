@@ -34,6 +34,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Print branch name
+        run: |
+          echo "Current branch: ${GITHUB_REF##*/}"
+
       # Get the default space UUID from a file
       - name: read default space UUID from file
         id: readDefaultSpaceUuid
