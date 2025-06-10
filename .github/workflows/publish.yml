@@ -63,7 +63,7 @@ jobs:
         run: npm ci
         # npm prepare scripts will run builds, so build-time envs go here
         # env:
-          # BASE_URL: "/space/${{ steps.readDefaultSpaceUuid.outputs.content }}/"
+        #   BASE_URL: "/space/${{ steps.readDefaultSpaceUuid.outputs.content }}/"
 
       - name: Publish ${{ inputs.files }} to WAS
         id: test-action
