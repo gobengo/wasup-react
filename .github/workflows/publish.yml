@@ -1,4 +1,4 @@
-name: Publish to WAS
+name: Upload to Wallet Attached Storage (WASUP)
 
 on:
   push:

@@ -6,7 +6,8 @@
   ],
   "version": "0.0.0",
   "scripts": {
-    "build": "npm -w website run build"
+    "build": "npm -w website run build",
+    "dev": "npm -w website run dev"
   }
 }
 
