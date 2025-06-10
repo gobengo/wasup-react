@@ -38,6 +38,24 @@ jobs:
         run: |
           echo "Current branch: ${GITHUB_REF##*/}"
 
+      - name: Get Repository URL and Branch Name
+        run: |
+          echo "Repository URL: https://github.com/${{ github.repository }}"
+
+          if [[ ${{ github.event_name }} == 'pull_request' ]]; then
+            echo "Source Branch: ${{ github.head_ref }}"
+          else
+            echo "Branch Name: ${GITHUB_REF##*/}"
+          fi
+
+      - id: echoGitHubUrl
+        run: |
+          echo "url=https://github.com/${{ github.repository }}" >> "$GITHUB_OUTPUT"
+      - run: echo "${{ steps.echoGitHubUrl.outputs.url }}"
+
+      - run: echo "GITHUB_BRANCH_URL=${{ steps.echoGitHubUrl.outputs.url }}" >> $GITHUB_ENV
+      - run: echo "GITHUB_BRANCH_URL=$GITHUB_BRANCH_URL"
+
       # Get the default space UUID from a file
       - name: read default space UUID from file
         id: readDefaultSpaceUuid
