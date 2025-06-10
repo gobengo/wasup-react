@@ -1,5 +1,5 @@
 {
-  "name": "@wasup-react-router/monorepo",
+  "name": "@wasup-react/monorepo",
   "type": "module",
   "workspaces": [
     "website"

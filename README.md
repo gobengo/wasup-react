@@ -1,4 +1,4 @@
-# wasup-react-router ☝️
+# wasup-react ☝️
 
 **Build and deploy React websites without touching a terminal!** 
 
@@ -67,7 +67,7 @@ The only limit is your imagination!
 ## 🛠️ Getting started
 
 1. **Click "Fork" at the top of this page** - This creates your own copy
-2. **Go to your forked repository** - It'll be at `github.com/yourusername/wasup-react-router`
+2. **Go to your forked repository** - It'll be at `github.com/yourusername/wasup-react`
 3. **Edit files in `website/app/routes/`** - Start with `_index.tsx` for your homepage
 4. **Commit your changes** - Just click the green "Commit changes" button
 5. **Watch the magic happen** - Check the "Actions" tab to see your site building

@@ -1,5 +1,5 @@
 {
-  "name": "@wasup-react-router/website",
+  "name": "@wasup-react/website",
   "private": true,
   "type": "module",
   "scripts": {
