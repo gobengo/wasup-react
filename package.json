@@ -1,0 +1,12 @@
+{
+  "name": "@wasup-react-router/monorepo",
+  "type": "module",
+  "workspaces": [
+    "website"
+  ],
+  "version": "0.0.0",
+  "scripts": {
+    "build": "npm -w website run build"
+  }
+}
+

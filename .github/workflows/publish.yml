@@ -1,0 +1,84 @@
+name: Publish to WAS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: GitHub Environment to use
+        required: false
+        default: production
+      space:
+        description: URL of Data Space
+        required: false
+      files:
+        description: 'Files to upload'
+        required: true
+        default: '_site/*'
+      filesStripPrefix:
+        description: Strip this prefix from the files before PUT to WAS
+        required: false
+        default: '_site/'
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Publish to WAS
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment}}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # Get the default space UUID from a file
+      - name: read default space UUID from file
+        id: readDefaultSpaceUuid
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: default-space/uuid
+      - id: echoSpaceUrl
+        env:
+          SPACE_UUID: "${{ steps.readDefaultSpaceUuid.outputs.content }}"
+        run: |
+          echo "spaceUrl=https://storage.bengo.is/space/$SPACE_UUID" >> "$GITHUB_OUTPUT"
+
+      # Set up node.js
+      - name: Setup Node.js
+        if: ${{ hashFiles('package.json') != '' }}
+        id: setup-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install Dependencies
+        id: npm-ci
+        run: npm ci
+        # npm prepare scripts will run builds, so build-time envs go here
+        env:
+          BASE_URL: "/space/${{ steps.readDefaultSpaceUuid.outputs.content }}/"
+
+      - name: Publish ${{ inputs.files }} to WAS
+        id: test-action
+        uses:  gobengo/wallet-attached-storage-action@main
+        with:
+          space: "${{ steps.echoSpaceUrl.outputs.spaceUrl }}"
+          id: "${{ secrets.WASUP_ID }}"
+          # ACTIONS_STEP_DEBUG: "${{ inputs.ACTIONS_STEP_DEBUG }}"
+          files: "${{ inputs.files || './rai-website/build/client/*' }}"
+          filesStripPrefix: "${{ inputs.filesStripPrefix || 'rai-website/build/client/' }}"
+
+      - name: Print Space URL
+        id: output-space
+        run: echo "${{ steps.test-action.outputs.space }}"
+
+      - run: |
+          echo "# Publish Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Space" >> $GITHUB_STEP_SUMMARY
+          echo "<${{ steps.test-action.outputs.space }}>" >> $GITHUB_STEP_SUMMARY
+          echo "### Space Home Page" >> $GITHUB_STEP_SUMMARY
+          echo "<${{ steps.test-action.outputs.space }}/>" >> $GITHUB_STEP_SUMMARY
