@@ -68,8 +68,8 @@ jobs:
           space: "${{ steps.echoSpaceUrl.outputs.spaceUrl }}"
           id: "${{ secrets.WASUP_ID }}"
           # ACTIONS_STEP_DEBUG: "${{ inputs.ACTIONS_STEP_DEBUG }}"
-          files: "${{ inputs.files || './rai-website/build/client/*' }}"
-          filesStripPrefix: "${{ inputs.filesStripPrefix || 'rai-website/build/client/' }}"
+          files: "${{ inputs.files || './website/build/client/*' }}"
+          filesStripPrefix: "${{ inputs.filesStripPrefix || 'website/build/client/' }}"
 
       - name: Print Space URL
         id: output-space
