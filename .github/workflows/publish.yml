@@ -23,6 +23,7 @@ on:
         required: false
         default: '_site/'
 
+
 permissions:
   contents: read
 
@@ -48,6 +49,19 @@ jobs:
           else
             echo "Branch Name: ${GITHUB_REF##*/}"
           fi
+
+      - if: ${{ github.event_name == 'pull_request' }}
+        name: Get PR Source Branch URL
+        id: getGitHubPrSourceUrl
+        run: |
+          echo "GITHUB_PR_SOURCE_URL=https://github.com/${{ github.repository }}/tree/${{ github.head_ref }}" >> $GITHUB_OUTPUT
+
+      - id: echoGitHubPrSourceUrl
+        run: |
+          echo "$GITHUB_PR_SOURCE_URL"
+
+      - run: echo ${{ steps.echoGitHubPrSourceUrl.outputs }}
+      - run: echo ${{ steps.getGitHubPrSourceUrl.outputs.GITHUB_PR_SOURCE_URL }}
 
       - id: echoGitHubUrl
         run: |
