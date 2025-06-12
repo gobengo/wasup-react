@@ -55,21 +55,26 @@ jobs:
         id: getGitHubPrSourceUrl
         run: |
           echo "GITHUB_PR_SOURCE_URL=https://github.com/${{ github.repository }}/tree/${{ github.head_ref }}" >> $GITHUB_OUTPUT
-
-      - id: echoGitHubPrSourceUrl
+      - if: ${{ github.event_name != 'pull_request' }}
+        name: Get Current Branch URL
+        id: getGitHubBranchUrl
         run: |
-          echo "$GITHUB_PR_SOURCE_URL"
-
-      - run: echo ${{ steps.echoGitHubPrSourceUrl.outputs }}
-      - run: echo ${{ steps.getGitHubPrSourceUrl.outputs.GITHUB_PR_SOURCE_URL }}
+          echo "GITHUB_REF_BRANCH_URL=https://github.com/${{ github.repository }}/tree/${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
 
       - id: echoGitHubUrl
         run: |
-          echo "url=https://github.com/${{ github.repository }}" >> "$GITHUB_OUTPUT"
-      - run: echo "${{ steps.echoGitHubUrl.outputs.url }}"
+          echo ${{ steps.getGitHubPrSourceUrl.outputs.GITHUB_PR_SOURCE_URL || steps.getGitHubBranchUrl.outputs.GITHUB_REF_BRANCH_URL }} >> $GITHUB_OUTPUT
 
       - run: echo "GITHUB_BRANCH_URL=${{ steps.echoGitHubUrl.outputs.url }}" >> $GITHUB_ENV
       - run: echo "GITHUB_BRANCH_URL=$GITHUB_BRANCH_URL"
+
+      # Ok now we can finally build a URL to the branch on GitHub,
+      # which should be based on the PR Source, if there is one,
+      # otherwise the current branch.
+      - if: ${{ steps.echoGitHubUrl.outputs }}
+        run: echo "SPACE_SUBJECT=${{ steps.echoGitHubUrl.outputs }}" >> $GITHUB_ENV
+      
+      - run: echo "SPACE_SUBJECT=$SPACE_SUBJECT"
 
       # Get the default space UUID from a file
       - name: read default space UUID from file
