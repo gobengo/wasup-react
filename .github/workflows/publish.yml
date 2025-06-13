@@ -74,6 +74,7 @@ jobs:
       - if: ${{ steps.echoGitHubUrl.outputs }}
         run: echo "SPACE_SUBJECT=${{ steps.echoGitHubUrl.outputs }}" >> $GITHUB_ENV
       
+
       - run: echo "SPACE_SUBJECT=$SPACE_SUBJECT"
 
       # Get the default space UUID from a file
