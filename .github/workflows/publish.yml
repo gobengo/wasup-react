@@ -62,7 +62,7 @@ jobs:
       # which should be based on the PR Source, if there is one,
       # otherwise the current branch.
       - if: ${{ steps.echoGitHubUrl.outputs }}
-        run: echo "SPACE_SUBJECT=${{ steps.echoGitHubUrl.outputs }}" >> $GITHUB_ENV
+        run: echo "SPACE_SUBJECT=${{ steps.echoGitHubUrl.outputs.GITHUB_BRANCH_URL }}" >> $GITHUB_ENV
       
 
       - run: echo "SPACE_SUBJECT=$SPACE_SUBJECT"
