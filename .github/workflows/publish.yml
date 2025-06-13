@@ -53,9 +53,9 @@ jobs:
 
       - id: echoGitHubUrl
         run: |
-          echo ${{ steps.getGitHubPrSourceUrl.outputs.GITHUB_PR_SOURCE_URL || steps.getGitHubBranchUrl.outputs.GITHUB_REF_BRANCH_URL }} >> $GITHUB_OUTPUT
+          echo "GITHUB_BRANCH_URL=${{ steps.getGitHubPrSourceUrl.outputs.GITHUB_PR_SOURCE_URL || steps.getGitHubBranchUrl.outputs.GITHUB_REF_BRANCH_URL }}" >> $GITHUB_OUTPUT
 
-      - run: echo "GITHUB_BRANCH_URL=${{ steps.echoGitHubUrl.outputs.url }}" >> $GITHUB_ENV
+      - run: echo "GITHUB_BRANCH_URL=${{ steps.echoGitHubUrl.outputs.GITHUB_BRANCH_URL }}" >> $GITHUB_ENV
       - run: echo "GITHUB_BRANCH_URL=$GITHUB_BRANCH_URL"
 
       # Ok now we can finally build a URL to the branch on GitHub,
