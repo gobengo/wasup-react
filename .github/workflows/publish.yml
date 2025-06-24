@@ -71,6 +71,7 @@ jobs:
           # https://datatracker.ietf.org/doc/html/rfc9562#section-6.6
           RFC962_NSID_URL='6ba7b811-9dad-11d1-80b4-00c04fd430c8'
           echo "creating SPACE_SUBJECT_CUUID from SPACE_SUBJECT=$SPACE_SUBJECT and RFC962_NSID_URL=$RFC962_NSID_URL"
+          echo "going to do npx -y cuuid-sha-256 --namespace $RFC962_NSID_URL $SPACE_SUBJECT"
           SPACE_SUBJECT_CUUID="$(npx -y cuuid-sha-256 --namespace "$RFC962_NSID_URL" $SPACE_SUBJECT)"
           echo "SPACE_SUBJECT_CUUID=$SPACE_SUBJECT_CUUID"
           echo "SPACE_SUBJECT_CUUID=$SPACE_SUBJECT_CUUID" >> $GITHUB_ENV
