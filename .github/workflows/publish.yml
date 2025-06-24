@@ -66,11 +66,9 @@ jobs:
       
 
       - run: echo "SPACE_SUBJECT=$SPACE_SUBJECT"
-
-      - run: npx -y cuuid-sha-256 ${{ steps.echoGitHubUrl.outputs.GITHUB_BRANCH_URL }}
       - run: |
           RFC962_NSID_URL='6ba7b811-9dad-11d1-80b4-00c04fd430c8'
-          npx -y cuuid-sha-256 --namespace "$RFC962_NSID_URL" "${{ steps.echoGitHubUrl.outputs.GITHUB_BRANCH_URL }}"
+          echo -n "$SPACE_SUBJECT" | npx -y cuuid-sha-256 --namespace "$RFC962_NSID_URL"
 
       # - run: |
       #     # https://datatracker.ietf.org/doc/html/rfc9562#section-6.6
