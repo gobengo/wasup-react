@@ -8,6 +8,8 @@
   "scripts": {
     "build": "npm -w website run build",
     "dev": "npm -w website run dev"
+  },
+  "devDependencies": {
+    "cuuid-sha-256": "^1.1.4"
   }
 }
-
