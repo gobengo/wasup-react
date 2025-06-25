@@ -1,4 +1,4 @@
-#!/usr/bin/env node --no-warnings
+#!/usr/bin/env node
 
 import { parseArgs } from 'node:util'
 const DEFAULT_CONTROLLER = undefined
