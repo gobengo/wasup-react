@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 export function meta({ }: Route.MetaArgs) {
   return [
-    { title: "WASUP" },
+    { title: "WASUP (with a changed title)" },
   ];
 }
 

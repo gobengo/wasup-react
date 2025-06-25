@@ -5,7 +5,7 @@ export default function Welcome() {
     <main className="p-8 min-h-screen flex flex-col justify-center items-center w-full">
       <h1 className="text-9xl font-extrabold text-center">
         <Link to="wasup">
-          WASUP
+          WASUP (with a changed title)
         </Link>
       </h1>
     </main>
