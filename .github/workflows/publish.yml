@@ -109,7 +109,9 @@ jobs:
 
       - run: |
           SPACE_JSON="$(echo "$WASUP_ID" | npx wasupdoc --controller /dev/stdin)"
-          echo "SPACE_JSON=$SPACE_JSON" >> $GITHUB_OUTPUT
+          echo "SPACE_JSON<<$EOF" >> $GITHUB_OUTPUT
+          echo "$SPACE_JSON" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
         env:
           WASUP_ID: "${{ secrets.WASUP_ID }}"
         id: echoSpaceJson
