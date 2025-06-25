@@ -1,10 +1,11 @@
 {
   "name": "@wasup-react/monorepo",
+  "version": "0.1.0",
   "type": "module",
   "workspaces": [
+    ".",
     "website"
   ],
-  "version": "0.0.0",
   "scripts": {
     "build": "npm -w website run build",
     "dev": "npm -w website run dev"
