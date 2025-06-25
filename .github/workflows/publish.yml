@@ -74,20 +74,6 @@ jobs:
       - run: echo "SPACE_SUBJECT_CUUID=${{ steps.echoSpaceSubjectCuuid.outputs.SPACE_SUBJECT_CUUID }}" >> $GITHUB_ENV
       - run: echo "SPACE_SUBJECT_CUUID=$SPACE_SUBJECT_CUUID"
 
-      # - name: 'Setup jq'
-      #   uses: dcarbone/install-jq-action@v3
-      - run: echo "char count of WASUP_ID is $(echo "$WASUP_ID" | wc -c)"
-        env:
-          WASUP_ID: "${{ secrets.WASUP_ID }}"     
-      - run: npm i -g wasupdoc
-      - run: wasupdoc --help
-      - run: echo "$WASUP_ID" | wasupdoc --controller /dev/stdin
-        env:
-          WASUP_ID: "${{ secrets.WASUP_ID }}"
-        id: echoSpaceJson
-
-      - run: echo "SPACE_JSON=${{ steps.echoSpaceJson.outputs.SPACE_JSON }}"
-
       - id: echoSpaceUrl
         env:
           SPACE_UUID: "${{ steps.echoSpaceSubjectCuuid.outputs.SPACE_SUBJECT_CUUID }}"
@@ -102,6 +88,23 @@ jobs:
         with:
           node-version: 24
           cache: npm
+
+
+      # - name: 'Setup jq'
+      #   uses: dcarbone/install-jq-action@v3
+      - run: echo "char count of WASUP_ID is $(echo "$WASUP_ID" | wc -c)"
+        env:
+          WASUP_ID: "${{ secrets.WASUP_ID }}"     
+      - run: npm i -g wasupdoc
+      - run: wasupdoc --help
+      - run: echo "$WASUP_ID" | wasupdoc --controller /dev/stdin
+        env:
+          WASUP_ID: "${{ secrets.WASUP_ID }}"
+        id: echoSpaceJson
+
+      - run: echo "SPACE_JSON=${{ steps.echoSpaceJson.outputs.SPACE_JSON }}"
+
+
       - name: Install Dependencies
         id: npm-ci
         run: npm ci
