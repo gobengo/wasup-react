@@ -125,10 +125,11 @@ jobs:
           SPACE_JSON: "${{ steps.echoSpaceJson.outputs.SPACE_JSON }}"
 
       - run: |
-          trap "rm /WASUP_ID" EXIT
-          echo "$WASUP_ID" > /WASUP_ID
-          echo "$SPACE_JSON" | wasup /dev/stdin "${{ steps.echoSpaceUrl.outputs.spaceUrl }}" --identity /wasup.id
+          # /dev/fd/8 will be WASUP_ID
+          exec 8< <(echo "$WASUP_ID")
+          echo "$SPACE_JSON" | wasup /dev/stdin "$SPACE_URL" --identity /dev/fd/8
         env:
+          SPACE_URL: "${{ steps.echoSpaceUrl.outputs.spaceUrl }}"
           SPACE_JSON: "${{ steps.echoSpaceJson.outputs.SPACE_JSON }}"
           WASUP_ID: "${{ secrets.WASUP_ID }}"
 
