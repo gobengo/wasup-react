@@ -7,13 +7,13 @@ const args = parseArgs({
     server: {
       type: 'string',
     },
-    space: {
+    uuid: {
       type: 'string',
       default: process.env.SPACE_UUID || crypto.randomUUID(),
     }
   }
 })
-const spaceUuid = args.values.space
+const spaceUuid = args.values.uuid
 const id = `urn:uuid:${spaceUuid}`
 const SPACE_PATH = `/space/${spaceUuid}`
 const linkset = {

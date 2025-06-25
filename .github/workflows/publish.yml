@@ -137,10 +137,28 @@ jobs:
           echo "$WASUP_ID" > "$WASUP_ID_FILE"
           echo "$SPACE_JSON" | wasup /dev/stdin "$SPACE_URL" --identity "$WASUP_ID_FILE" -v
           wasup README.md "$SPACE_URL"/README.md --identity "$WASUP_ID_FILE" -v
+
+          # add linkset.json
+          echo "creating linkset with uuid $WASUP_REACT_SPACE_UUID"
+          LINKSET_JSON="$(./scripts/linkset.json.ts --uuid "$WASUP_REACT_SPACE_UUID")"
+          LINKSET_JSON_FILE="$RUNNER_TEMP"/LINKSET_JSON
+          echo "$LINKSET_JSON" > "$LINKSET_JSON_FILE"
+          wasup "$LINKSET_JSON_FILE" "$SPACE_URL/linkset.json" --identity "$WASUP_ID_FILE" -v
+          echo "wrote $SPACE_URL/linkset.json"
+
+          # add acl.json
+          echo "creating acl with uuid $WASUP_REACT_SPACE_UUID"
+          ACL_JSON="$(./scripts/acl.json.ts)"
+          ACL_JSON_FILE="$RUNNER_TEMP"/ACL_JSON
+          ACL_JSON_URL="$SPACE_URL/acl.json"
+          echo "$ACL_JSON" > "$ACL_JSON_FILE"
+          wasup "$ACL_JSON_FILE" "$ACL_JSON_URL" --identity "$WASUP_ID_FILE" -v
+          echo "wrote $ACL_JSON_URL"
         env:
           SPACE_URL: "${{ steps.echoSpaceUrl.outputs.spaceUrl }}"
           SPACE_JSON: "${{ steps.echoSpaceJson.outputs.SPACE_JSON }}"
           WASUP_ID: "${{ secrets.WASUP_ID }}"
+          WASUP_REACT_SPACE_UUID: "${{ steps.echoSpaceSubjectCuuid.outputs.SPACE_SUBJECT_CUUID }}"
 
       - name: Publish to WAS
         id: test-action
