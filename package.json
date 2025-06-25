@@ -10,7 +10,8 @@
     "dev": "npm -w website run dev"
   },
   "devDependencies": {
-    "cuuid-sha-256": "^1.1.4"
+    "cuuid-sha-256": "^1.1.4",
+    "wasupdoc": "^0.0.4"
   },
   "dependencies": {
     "@types/node": "^24.0.4"
