@@ -11,13 +11,13 @@ const args = parseArgs({
     server: {
       type: 'string',
     },
-    space: {
+    uuid: {
       type: 'string',
       default: process.env.SPACE_UUID || crypto.randomUUID(),
     }
   }
 })
-const spaceUuid = args.values.space
+const spaceUuid = args.values.uuid
 const id = `urn:uuid:${spaceUuid}`
 const link = `/space/${spaceUuid}/linkset.json`
 const controller = 'false' === args.values.controller ? undefined : (true === args.values.controller) ? DEFAULT_CONTROLLER : args.values.controller || DEFAULT_CONTROLLER

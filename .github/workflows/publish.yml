@@ -108,12 +108,13 @@ jobs:
           WASUP_ID: "${{ secrets.WASUP_ID }}"
 
       - run: |
-          SPACE_JSON="$(echo "$WASUP_ID" | npx wasupdoc --controller /dev/stdin)"
+          SPACE_JSON="$(./scripts/ci-space.json.sh)"
           echo "SPACE_JSON<<EOF" >> $GITHUB_OUTPUT
           echo "$SPACE_JSON" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
         env:
           WASUP_ID: "${{ secrets.WASUP_ID }}"
+          WASUP_REACT_SPACE_UUID: "${{ steps.echoSpaceSubjectCuuid.outputs.SPACE_SUBJECT_CUUID }}"
         id: echoSpaceJson
 
       - run: |
