@@ -123,7 +123,7 @@ jobs:
       - run: |
           trap "rm /WASUP_ID" EXIT
           echo "$WASUP_ID" > /WASUP_ID
-          echo $SPACE_JSON | wasup /dev/stdin "${{ steps.echoSpaceUrl.outputs.spaceUrl }}" --identity /wasup.id
+          echo "$SPACE_JSON" | wasup /dev/stdin "${{ steps.echoSpaceUrl.outputs.spaceUrl }}" --identity /wasup.id
 
       - name: Publish to WAS
         id: test-action
