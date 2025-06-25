@@ -116,7 +116,14 @@ jobs:
           WASUP_ID: "${{ secrets.WASUP_ID }}"
         id: echoSpaceJson
 
-      - run: echo "SPACE_JSON=${{ steps.echoSpaceJson.outputs.SPACE_JSON }}"
+      - run: echo "SPACE_JSON=${{ steps.echoSpaceJson.outputs.SPACE_JSON }}" >> $GITHUB_ENV
+
+      - run: echo SPACE_JSON=$SPACE_JSON
+
+      - run: |
+          trap "rm /WASUP_ID" EXIT
+          echo "$WASUP_ID" > /WASUP_ID
+          echo $SPACE_JSON | wasup /dev/stdin "${{ steps.echoSpaceUrl.outputs.spaceUrl }}" --identity /wasup.id
 
       - name: Publish to WAS
         id: test-action
