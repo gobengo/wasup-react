@@ -106,11 +106,15 @@ jobs:
       - run: echo "$WASUP_ID" | npx wasupdoc --controller /dev/stdin
         env:
           WASUP_ID: "${{ secrets.WASUP_ID }}"
+
+      - run: echo "SPACE_JSON=$(echo "$WASUP_ID" | npx wasupdoc --controller /dev/stdin)" >> $GITHUB_OUTPUT
+        env:
+          WASUP_ID: "${{ secrets.WASUP_ID }}"
         id: echoSpaceJson
 
       - run: echo "SPACE_JSON=${{ steps.echoSpaceJson.outputs.SPACE_JSON }}"
 
-      - name: Publish ${{ inputs.files }} to WAS
+      - name: Publish to WAS
         id: test-action
         uses:  gobengo/wallet-attached-storage-action@main
         with:
