@@ -131,8 +131,10 @@ jobs:
           SPACE_JSON: "${{ steps.echoSpaceJson.outputs.SPACE_JSON }}"
 
       - run: |
-          exec 8< <(echo "$WASUP_ID")
-          echo "$SPACE_JSON" | npx wasup /dev/stdin "$SPACE_URL" --identity /dev/fd/8
+          WASUP_ID_FILE="$RUNNER_TEMP"/WASUP_ID
+          trap 'rm -f $WASUP_ID_FILE' EXIT
+          echo "$WASUP_ID" > "$WASUP_ID_FILE"
+          echo "$SPACE_JSON" | npx wasup /dev/stdin "$SPACE_URL" --identity "$WASUP_ID_FILE"
         env:
           SPACE_URL: "${{ steps.echoSpaceUrl.outputs.spaceUrl }}"
           SPACE_JSON: "${{ steps.echoSpaceJson.outputs.SPACE_JSON }}"
