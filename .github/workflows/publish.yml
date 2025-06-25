@@ -74,6 +74,11 @@ jobs:
       - run: echo "SPACE_SUBJECT_CUUID=${{ steps.echoSpaceSubjectCuuid.outputs.SPACE_SUBJECT_CUUID }}" >> $GITHUB_ENV
       - run: echo "SPACE_SUBJECT_CUUID=$SPACE_SUBJECT_CUUID"
 
+      - name: 'Setup jq'
+        uses: dcarbone/install-jq-action@v3
+      - run:
+          echo "${{ secrets.WASUP_ID }}" | npx https://github.com/gobengo/wasupdoc --controller /dev/stdin | jq '. += {"link":"/space/'$SPACE_SUBJECT_CUUID'/links/"}'
+
       - id: echoSpaceUrl
         env:
           SPACE_UUID: "${{ steps.echoSpaceSubjectCuuid.outputs.SPACE_SUBJECT_CUUID }}"
