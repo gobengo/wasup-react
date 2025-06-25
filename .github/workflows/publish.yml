@@ -76,6 +76,9 @@ jobs:
 
       # - name: 'Setup jq'
       #   uses: dcarbone/install-jq-action@v3
+      - run: echo "char count of WASUP_ID is $(echo "$WASUP_ID" | wc -c)"
+        env:
+          WASUP_ID: "${{ secrets.WASUP_ID }}"      
       - run: echo "$WASUP_ID" | npx -y https://github.com/gobengo/wasupdoc --controller /dev/stdin
         env:
           WASUP_ID: "${{ secrets.WASUP_ID }}"
