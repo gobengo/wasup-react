@@ -125,7 +125,6 @@ jobs:
           SPACE_JSON: "${{ steps.echoSpaceJson.outputs.SPACE_JSON }}"
 
       - run: |
-          # /dev/fd/8 will be WASUP_ID
           exec 8< <(echo "$WASUP_ID")
           echo "$SPACE_JSON" | npx wasup /dev/stdin "$SPACE_URL" --identity /dev/fd/8
         env:
