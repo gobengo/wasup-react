@@ -142,9 +142,10 @@ jobs:
           echo "creating linkset with uuid $WASUP_REACT_SPACE_UUID"
           LINKSET_JSON="$(./scripts/linkset.json.ts --uuid "$WASUP_REACT_SPACE_UUID")"
           LINKSET_JSON_FILE="$RUNNER_TEMP"/LINKSET_JSON
+          LINKSET_JSON_URL="$SPACE_URL/linkset.json"
           echo "$LINKSET_JSON" > "$LINKSET_JSON_FILE"
-          wasup "$LINKSET_JSON_FILE" "$SPACE_URL/linkset.json" --identity "$WASUP_ID_FILE" -v
-          echo "wrote $SPACE_URL/linkset.json"
+          wasup --content-type application/linkset+json "$LINKSET_JSON_FILE" "$LINKSET_JSON_URL" --identity "$WASUP_ID_FILE" -v
+          echo "wrote $LINKSET_JSON_URL"
 
           # add acl.json
           echo "creating acl with uuid $WASUP_REACT_SPACE_UUID"
@@ -152,8 +153,8 @@ jobs:
           ACL_JSON_FILE="$RUNNER_TEMP"/ACL_JSON
           ACL_JSON_URL="$SPACE_URL/acl.json"
           echo "$ACL_JSON" > "$ACL_JSON_FILE"
-          wasup "$ACL_JSON_FILE" "$ACL_JSON_URL" --identity "$WASUP_ID_FILE" -v
-          echo "wrote $ACL_JSON_URL"
+          wasup --content-type application/json "$ACL_JSON_FILE" "$ACL_JSON_URL" --identity "$WASUP_ID_FILE" -v
+          echo "wrote ACL_JSON_URL=$ACL_JSON_URL"
         env:
           SPACE_URL: "${{ steps.echoSpaceUrl.outputs.spaceUrl }}"
           SPACE_JSON: "${{ steps.echoSpaceJson.outputs.SPACE_JSON }}"
