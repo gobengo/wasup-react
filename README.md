@@ -68,10 +68,11 @@ The only limit is your imagination!
 
 1. **Click "Fork" at the top of this page** - This creates your own copy
 2. **Go to your forked repository** - It'll be at `github.com/yourusername/wasup-react`
-3. **Edit files in `website/app/routes/`** - Start with `_index.tsx` for your homepage
-4. **Commit your changes** - Just click the green "Commit changes" button
-5. **Watch the magic happen** - Check the "Actions" tab to see your site building
-6. **Get your website URL** - It'll appear in your repository settings
+3. **Add a repository secret for wasup** - Add `WASUP_ID` as the private key from `ssh-keygen -t ed25519`
+4. **Edit files in `website/app/routes/`** - Start with `_index.tsx` for your homepage
+5. **Commit your changes** - Just click the green "Commit changes" button
+6. **Watch the magic happen** - Check the "Actions" tab to see your site building
+7. **Get your website URL** - It'll appear in your repository settings
 
 ## 💡 Pro tips for beginners
 
